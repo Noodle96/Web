@@ -1,5 +1,4 @@
 
-//$_POST['name']
 <?php
 	try{
 		require_once('funciones/bd_conexion.php');
@@ -18,7 +17,7 @@
         <title> Agenda php </title>
     </head>
     <body>
-        <div class="contenedor">
+        <div class="contenedor" id="contenedor">
             <h1>Agenda de contactos</h1>
             <div class="contenido" id="contacto">
                 <h2>Nuevo Contacto</h2>
@@ -39,9 +38,13 @@
         </div><!--contenedor-->
 
 		<div class="contenido existentes">
+			<div class="buscar">
+				<h2>Buscar</h2>
+				<input type="text" name="buscador" placeholder="Buscar" id="buscador" class="buscador" value="">
+			</div>
 			<h2>Contactos Existentes</h2>
 			<p>
-				Numero de Contactos: <?php echo $resultado->num_rows;?>
+				Numero de Contactos: <span id="total"><?php echo $resultado->num_rows;?></span>
 			</p>
 
 			<table id ="registrados">
@@ -58,7 +61,7 @@
 				<tbody>
 
 					<?php while($registros = $resultado->fetch_assoc()){?>
-						<tr>
+						<tr id="<?php echo $registros['idContacto']?>">
 							<td><?php echo $registros['nombreContacto'] ?></td>
 							<td><?php echo $registros['telefono'] ?></td>
 							<td>
@@ -70,9 +73,6 @@
 								<input type="checkbox" name="<?php echo $registros['idContacto'] ?>" class="borrar_contacto" value="">
 							</td>
 						</tr>
-						<!-- <pre>
-							<?php var_dump($registros); ?>
-						</pre> -->
 					<?php } ?>
 				</tbody>
 			</table>
